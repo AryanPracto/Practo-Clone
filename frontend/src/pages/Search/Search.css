@@ -1,0 +1,143 @@
+.home {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .practoLogo {
+    height: 40px;
+    width: auto;
+  }
+  
+  .logo h1 {
+    color: #14bef0;
+    margin: 0;
+  }
+  
+  .navLinks {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .navLinks a {
+    text-decoration: none;
+    color: #414146;
+    font-weight: 500;
+  }
+
+.active {
+    text-decoration: none;
+    color: #414146;
+    border-bottom: 2px solid blue; /* Underline effect */
+    font-weight: bold;
+  }
+  
+  .loginBtn {
+    background: transparent;
+    border: 1px solid #14bef0;
+    color: #14bef0;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .loginBtn:hover {
+    background-color: #14bef0;
+    color: white;
+  }
+  
+  .heroSection {
+    background-image: url("https://www.practostatic.com/web-assets/home/assets/images/homepage.06859593240c3efd483fe48951cfe6ff.svg");
+    background-size: cover;
+    background-position: center;
+    padding: 4rem 0;
+    border-radius: 8px 8px 0px 0px;
+    margin-top: 2rem;
+    text-align: center;
+    color: white;
+  }
+  
+  .heroContent {
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .heroContent h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .heroContent h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .featuresList {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+  
+  .featuresList li {
+    margin-bottom: 1rem;
+  }
+  
+  .searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .searchInput {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+  }
+  
+  .searchInput:focus {
+    border-color: #14bef0;
+  }
+  
+  
+  .servicesSection {
+    padding: 2rem 0;
+    text-align: center;
+    background-color: #1d2869;
+    color: #b8bbd9;
+  }
+  
+  .servicesSection h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .servicesList {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  .servicesList li {
+    font-size: 1.2rem;
+  }
