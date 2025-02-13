@@ -4,7 +4,7 @@ const Doctor = require("../models/doctor.model");
 const insertDoctors = async (req, res) => {
   try {
     // Extract doctor details from request body
-    const { name, specialization, post, experience, gender, description } = req.body;
+    const { name, specialization, post, experience, gender, description,image,doctor_index } = req.body;
 
     // Check if all required fields are provided
     if (!name || !specialization || !post || !experience || !gender || !description) {
@@ -19,6 +19,8 @@ const insertDoctors = async (req, res) => {
       experience,
       gender,
       description,
+      image,
+      doctor_index
     });
 
     res.status(201).json({ message: "Doctor added successfully", doctor });

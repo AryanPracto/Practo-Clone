@@ -38,6 +38,10 @@ const Doctor = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    doctor_index:{
+      type:DataTypes.STRING,
+      allowNull:true
+    }
   },
   {
     tableName: "doctors",
