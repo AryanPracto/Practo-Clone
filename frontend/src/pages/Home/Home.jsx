@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Home.css'
 
 const Home = () => {
   const [isActive, setIsActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [msg,setMsg]=useState('Login / Signup')
 
   const searchOptions = [
     { id: 1, name: 'Cold, Cough & Fever', type: 'CONDITION', isClickable: true },
@@ -58,9 +59,25 @@ const Home = () => {
 
   const handleOptionClick = (option) => {
     if (option.isClickable) {
-      window.location.href = 'http://localhost:5000/list';
+      if (option.name === 'Cold, Cough & Fever') {
+        window.location.href='http://localhost:5000/list-cough';
+      } else if (option.name === 'Dentist') {
+        window.location.href='http://localhost:5000/list-dentist';
+      }
     }
   };
+
+  const handleLogout=()=>{
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('naam')
+    window.location.replace('http://localhost:5000')
+  }
+
+  useEffect(()=>{
+    if(localStorage.getItem('naam')){
+      setMsg(localStorage.getItem('naam'));
+    }
+  },[])
 
   return (
     <div className="home">
@@ -76,7 +93,7 @@ const Home = () => {
           <a href="http://localhost:5173/search" onClick={() => setIsActive(true)} className={isActive ? 'active' : ''}>Find Doctors</a>
           <a href="#video-consult">Video Consult</a>
           <a href="#surgeries">Surgeries</a>
-          <button className="login-btn">Login / Signup</button>
+          <button onClick={handleLogout} className="login-btn"><a className='lgn' href="http://localhost:5000/login">{msg}</a></button>
         </div>
       </nav>
 

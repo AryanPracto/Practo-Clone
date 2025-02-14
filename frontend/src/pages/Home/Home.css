@@ -12,6 +12,10 @@
     border-bottom: 1px solid #eee;
   }
 
+  .lgn{
+    text-decoration: none;
+  }
+
   .practo-logo {
     height: 40px;
     width: auto;

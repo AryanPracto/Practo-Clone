@@ -12,7 +12,6 @@ const Doctor = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true, // ✅ Ensure doctor names are unique
     },
     specialization: {
       type: DataTypes.STRING,

@@ -1,0 +1,163 @@
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+  
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d2d32;
+    margin-right: 2rem;
+  }
+
+  .lgnt{
+    text-decoration: none;
+  }
+
+  .sgnt{
+    text-decoration: none;
+  }
+
+  .practo-logo {
+    height: 40px;
+    width: auto;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #2d2d32;
+  }
+  
+  .nav-right {
+    margin-left: auto;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .login-btn {
+    background: none;
+    border: none;
+    color: #2d2d32;
+    cursor: pointer;
+  }
+
+  .lgn{
+    text-decoration: none;
+  }
+  
+  .auth-content {
+    display: flex;
+    flex: 1;
+    padding: 2rem;
+    gap: 4rem;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .auth-image {
+    flex: 1;
+    max-width: 500px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .auth-image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .auth-form-container {
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  .auth-tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .tab {
+    padding: 1rem 2rem;
+    cursor: pointer;
+    color: #787887;
+  }
+  
+  .tab.active {
+    color: #14bef0;
+    border-bottom: 2px solid #14bef0;
+  }
+  
+  .auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    color: #2d2d32;
+  }
+  
+  .form-group input {
+    padding: 0.75rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+  
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #787887;
+  }
+  
+  .forgot-password {
+    color: #14bef0;
+    text-decoration: none;
+  }
+  
+  .submit-btn {
+    background-color: #14bef0;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0fa7d4;
+  }
+  
