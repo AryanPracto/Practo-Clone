@@ -294,7 +294,7 @@ const ListDentist = () => {
                       </div>
                      
                       <div className="doctor-details">
-                        <h2 className="doctor-name">{doctor.name}</h2>
+                      <h2 className="doctor-name"><a href={`http://localhost:5000/doctor/${doctor.id}`}>{doctor.name}</a></h2>
                         <p className="doctor-speciality">{doctor.specialization}</p>
                         <p className="doctor-experience">{doctor.experience} years experience overall</p>
                        

@@ -1,4 +1,7 @@
 const Doctor = require("../models/doctor.model");
+const Clinic=require('../models/clinic.model.js');
+const DoctorClinic=require('../models/doctor_clinic.model.js')
+const Slot=require('../models/slot.model.js')
 
 // Function to insert a doctor
 const insertDoctors = async (req, res) => {
@@ -30,4 +33,113 @@ const insertDoctors = async (req, res) => {
   }
 };
 
-module.exports = { insertDoctors };
+const insertClinic = async (req, res) => {
+  try {
+    const {
+      name,
+      location,
+      workingDays,
+      openingTime,
+      closingTime,
+      fee,
+      rating
+    } = req.body;
+
+    // Validate required fields
+    if (!name || !location || !workingDays || !openingTime || !closingTime || fee === undefined || rating === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields (name, location, workingDays, openingTime, closingTime, fee, rating) are required."
+      });
+    }
+
+    // Create the clinic record
+    const clinic = await Clinic.create({
+      name,
+      location,
+      workingDays,
+      openingTime,
+      closingTime,
+      fee,
+      rating,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Clinic created successfully",
+      clinic,
+    });
+  } catch (error) {
+    console.error("Error inserting clinic:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
+const insertDocClinic = async (req, res) => {
+  try {
+    const { doctorId, clinicId } = req.body;
+
+    // Validate that both doctorId and clinicId are provided
+    if (!doctorId || !clinicId) {
+      return res.status(400).json({
+        success: false,
+        message: "Both doctorId and clinicId are required."
+      });
+    }
+
+    // Create a new record in the DoctorClinic table
+    const docClinic = await DoctorClinic.create({ doctorId, clinicId });
+
+    return res.status(201).json({
+      success: true,
+      message: "Doctor and clinic mapping created successfully.",
+      docClinic
+    });
+  } catch (error) {
+    console.error("Error inserting doctor-clinic mapping:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error."
+    });
+  }
+};
+
+const insertSlot = async (req, res) => {
+  try {
+    const { doctorId, clinicId, date, time, status } = req.body;
+
+    // Basic validation
+    if (!doctorId || !clinicId || !date || !time) {
+      return res.status(400).json({
+        success: false,
+        message: 'doctorId, clinicId, date, and time are required.',
+      });
+    }
+
+    // Create the slot
+    const newSlot = await Slot.create({
+      doctorId,
+      clinicId,
+      date,
+      time,
+      status: status || 'Available', // fallback if status not provided
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: 'Slot created successfully',
+      slot: newSlot,
+    });
+  } catch (error) {
+    console.error('Error creating slot:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    });
+  }
+};
+
+module.exports = { insertDoctors,insertClinic,insertDocClinic,insertSlot };

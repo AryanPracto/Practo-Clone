@@ -1,0 +1,401 @@
+/* ----------------------------------------
+   DoctorProfile Container & Layout
+------------------------------------------- */
+.doctor-profile-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, sans-serif;
+    color: #333;
+  }
+  
+  /* Main layout: two columns on desktop */
+  .profile-main {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+  
+  @media (max-width: 992px) {
+    /* Single column on smaller screens */
+    .profile-main {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ----------------------------------------
+     Left Column: Doctor Info
+  ------------------------------------------- */
+  .profile-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Doctor Basic Info Card */
+  .doctor-basic-info {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .doctor-image img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .doctor-info h1 {
+    margin: 0 0 8px 0;
+    font-size: 1.5rem;
+    color: #414146;
+  }
+  
+  .qualifications {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  
+  .specialities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  
+  .specialty-tag {
+    background: #e6f7ff;
+    color: #1890ff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+  
+  .experience {
+    color: #414146;
+    margin-bottom: 6px;
+  }
+  
+  .verified-badge {
+    color: #00a400;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  /* Doctor Description Card */
+  .doctor-description {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+  }
+  
+  /* Clinic Info Card */
+  .clinic-info {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .clinic-info h2 {
+    margin: 0 0 12px 0;
+    font-size: 1.2rem;
+    color: #414146;
+  }
+  
+  .clinic-card {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fafafa;
+  }
+  
+  .clinic-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .clinic-rating {
+    color: #fadb14; /* Gold color */
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+  
+  .clinic-timings {
+    margin: 8px 0;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .timing-label {
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .timing-value {
+    white-space: pre;
+    color: #414146;
+  }
+  
+  .clinic-fee {
+    margin: 8px 0;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .fee-label {
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .fee-value {
+    color: #414146;
+  }
+  
+  .clinic-address {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+  }
+  
+  /* ----------------------------------------
+     Right Column: Appointment Section
+  ------------------------------------------- */
+  .profile-right {
+    position: relative;
+    height: fit-content;
+  }
+  
+  .appointment-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .appointment-card h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    color: #414146;
+  }
+  
+  .clinic-type {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  
+  .clinic-icon {
+    font-size: 1.4rem;
+  }
+  
+  .fee {
+    margin-left: auto;
+    color: #00a400;
+    font-weight: 500;
+  }
+  
+  .time-slots {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+  }
+  
+  .date-navigator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .date-nav-btn {
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .available-dates {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .date-item {
+    padding: 6px 12px;
+    border-radius: 16px;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #414146;
+  }
+  
+  .date-item.selected {
+    background: #e6f7ff;
+    color: #0070cc;
+    border: 1px solid #0070cc;
+  }
+  
+  .slot-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+  }
+  
+  .time-slot {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6px 8px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #414146;
+  }
+  
+  .time-slot:hover {
+    background: #e6f7ff;
+    border-color: #1890ff;
+    color: #1890ff;
+  }
+  
+  /* ----------------------------------------
+     Loading & Error States
+  ------------------------------------------- */
+  .loading-state,
+  .error-state {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.2rem;
+  }
+  
+  /* ----------------------------------------
+     Navbar & Search Section (If used)
+  ------------------------------------------- */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+  }
+  
+  .practo-logo {
+    height: 32px;
+    cursor: pointer;
+  }
+  
+  .nav-links a,
+  .nav-links button {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #414146;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .nav-links .active {
+    color: #1890ff;
+  }
+  
+  .login-btn {
+    background: transparent;
+    border: 1px solid #14bef0;
+    color: #14bef0;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .login-btn:hover {
+    background-color: #f0f9fc;
+  }
+  
+  .search-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  .location-search input,
+  .doctor-search input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .doctor-search {
+    position: relative;
+    flex: 1;
+  }
+  
+  .search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+  
+  .dropdown-header {
+    background-color: #f7f7f7;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .dropdown-content {
+    padding: 8px;
+  }
+  
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    cursor: pointer;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f8f8f8;
+  }
+  
+  .item-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .arrow-icon {
+    width: 16px;
+    height: 16px;
+  }
+  

@@ -112,20 +112,8 @@ app.get('/signup',async(req,res)=>{
 
 app.get('/doctor/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    
-    const doctor = await Doctor.findOne({ where: { id } });
-
-    if (!doctor) {
-      console.log('No doctor found for ID:', id); // Add this debug log
-      return res.status(404).send('Doctor not found');
-    }
-
-    const doctorData = doctor.toJSON();
-    // For now, let's just send the JSON data instead of rendering
-    res.json(doctorData);
+    res.send(renderPage(DoctorProfile))
   } catch (error) {
-    console.error('Error fetching doctor:', error);
-    res.status(500).send('Server error');
+    console.log(error)
   }
 });
