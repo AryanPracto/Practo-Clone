@@ -1,6 +1,7 @@
 const Doctor = require("../models/doctor.model.js");
 const { Op } = require("sequelize");
 const Clinic=require('../models/clinic.model.js')
+const Slot=require('..//models/slot.model.js')
 
 const fetchDoctors=async(req,res)=>{
     try {
@@ -123,5 +124,29 @@ const fetchClinicsByDoctorId = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+const fetchSlots=async(req,res)=>{
+  try {
+    const { doctorId, clinicId, date } = req.query;
+    
+    const slots = await Slot.findAll({
+      where: {
+        doctorId,
+        clinicId,
+        date,
+        status: "Available" // Only get available slots
+      },
+      order: [
+        ['date', 'ASC'],
+        ['time', 'ASC']
+      ]
+    });
+
+    res.json(slots);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching slots" });
+  }
+}
 
 module.exports={fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
