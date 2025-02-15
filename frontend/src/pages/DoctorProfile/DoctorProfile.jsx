@@ -26,7 +26,7 @@ const DoctorProfile = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
 const [selectedClinic, setSelectedClinic] = useState(null);
 
-const [slots,setSlots]=useState(null);
+const [slots,setSlots]=useState([]);
 
   // Popular Searches
   const searchOptions = [
@@ -68,15 +68,19 @@ const [slots,setSlots]=useState(null);
         .get(`http://localhost:5000/api/v1/get/clinics/${id}`)
         .then((res) => {
           setClinics(res.data);
+          setSelectedClinic(res.data[0]?.id || null);
         })
         .catch((err) => {
           console.error(err);
         });
     }
+
+    if(localStorage.getItem('naam')){
+      setMsg(localStorage.getItem('naam'));
+    }
   }, [id]);
 
   useEffect(() => {
-    setSelectedClinic(clinics[0]);
     if (id && selectedClinic && selectedDate) {
       axios
         .get(`http://localhost:5000/api/v1/get/slots`, {
@@ -93,7 +97,7 @@ const [slots,setSlots]=useState(null);
           console.error(err);
         });
     }
-  }, [id, selectedClinic, selectedDate]);
+  }, [id, selectedClinic]);
 
   // Handle popular searches
   const handleOptionClick = (option) => {
@@ -292,7 +296,7 @@ const [slots,setSlots]=useState(null);
 
           {/* Right Column (Appointment Section) */}
           <ClinicSelector 
-  selectedClinic={selectedClinic}
+  clinic={clinics[0]}  // Ensure prop name matches
   slots={slots}
 />
         </div>

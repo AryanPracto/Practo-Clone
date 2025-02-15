@@ -2800,6 +2800,135 @@ font-size: 18px;
     height: 16px;
   }
   
+/* Main Container */
+.clinic-selector {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header */
+  .clinic-header {
+    background: #f0f8ff;
+    padding: 16px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  /* Clinic Info */
+  .clinic-info h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+  }
+  
+  .clinic-info .rating {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #ff9800;
+  }
+  
+  .clinic-info .rating span {
+    margin-left: 4px;
+  }
+  
+  /* Date Selector */
+  .date-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .date-selector button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .date-selector button:hover {
+    background: #f1f1f1;
+    border-radius: 50%;
+  }
+  
+  .date-selector div {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .date-selector div div {
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 4px 0;
+  }
+  
+  .date-selector div div:hover {
+    color: #1e88e5;
+  }
+  
+  .date-selector .selected-date {
+    border-bottom: 3px solid #1e88e5;
+    color: #1e88e5;
+  }
+  
+  /* Time Slots */
+  .time-slot-container {
+    margin-top: 16px;
+  }
+  
+  .time-slot-container h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+  }
+  
+  .time-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .time-slot-button {
+    padding: 10px 16px;
+    border: 2px solid #1e88e5;
+    color: #1e88e5;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .time-slot-button:hover {
+    background: #1e88e5;
+    color: white;
+  }
+  
+  /* Responsive */
+  @media (max-width: 480px) {
+    .date-selector div {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+  
+    .time-slots {
+      flex-direction: column;
+    }
+  }
+  
 .home {
     max-width: 1200px;
     margin: 0 auto;

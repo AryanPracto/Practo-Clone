@@ -7,6 +7,7 @@ import ListCough from './pages/ListCough/ListCough.jsx'
 import Login from "./pages/Login/Login.jsx";
 import Signup from "./pages/Signup/Signup.jsx";
 import DoctorProfile from "./pages/DoctorProfile/DoctorProfile.jsx";
+import PaymentSummary from "./pages/PaymentSummary/PaymentSummary.jsx";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/signup" element={<Signup/>}></Route>
         <Route path="/doctor/:id" element={<DoctorProfile/>}></Route>
+        <Route path="/payment-summary" element={<PaymentSummary />} />
     </Routes>
   </Router>
   )
