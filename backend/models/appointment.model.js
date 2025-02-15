@@ -3,6 +3,7 @@ const {sequelize} = require("../config/db.js");
 const User = require("./user.model.js");
 const Doctor = require("./doctor.model.js");
 const Clinic = require("./clinic.model.js");
+const Slot = require('../models/slot.model.js')
 
 const Appointment = sequelize.define(
   "Appointment",
@@ -17,6 +18,15 @@ const Appointment = sequelize.define(
       allowNull: false,
       references: {
         model: User,
+        key: "id",
+      },
+      onDelete: "CASCADE",
+    },
+    slotId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "slots",
         key: "id",
       },
       onDelete: "CASCADE",
@@ -66,9 +76,11 @@ const Appointment = sequelize.define(
 User.hasMany(Appointment, { foreignKey: "userId" });
 Doctor.hasMany(Appointment, { foreignKey: "doctorId" });
 Clinic.hasMany(Appointment, { foreignKey: "clinicId" });
+Slot.hasOne(Appointment, { foreignKey: "slotId" });
 
 Appointment.belongsTo(User, { foreignKey: "userId" });
 Appointment.belongsTo(Doctor, { foreignKey: "doctorId" });
 Appointment.belongsTo(Clinic, { foreignKey: "clinicId" });
+Appointment.belongsTo(Slot, { foreignKey: "slotId" });
 
 module.exports = Appointment;
