@@ -8,19 +8,27 @@ const ClinicSelector = ({ clinic, slots }) => {
 
   // Function to handle time slot click
   const handleSlotClick = (slot) => {
-    if(!localStorage.getItem('authToken')){
-        alert('plz login before booking the slot !!!')
-        return;
+    if (!localStorage.getItem("authToken")) {
+      alert("Please login before booking the slot!");
+      return;
     }
-    const token = localStorage.getItem('authToken'); // Get token from localStorage
-
+  
+    const token = localStorage.getItem("authToken"); // Get token from localStorage
+    console.log(clinic?.id);
+    console.log(slot?.doctorId);
+    console.log(clinic?.id);
+    console.log(selectedDate);
+  
     const queryParams = new URLSearchParams({
-      clinic: clinic?.name || 'n/a',
-      time: slot?.time || 'n/a',
-      fee: clinic?.fee || 'N/A',
-      token: token || '', // Append token as a query parameter
+      clinic: clinic?.name || "n/a",
+      clinicId: clinic?.id || "n/a", // Clinic ID
+      doctorId: slot?.doctorId || "n/a", // Doctor ID
+      date: selectedDate, // Selected date
+      time: slot?.time || "n/a", // Slot time
+      fee: clinic?.fee || "N/A",
+      token: token || "", // Append token as a query parameter
     }).toString();
-
+  
     window.location.href = `http://localhost:5173/payment-summary?${queryParams}`;
   };
 

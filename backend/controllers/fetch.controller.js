@@ -97,10 +97,8 @@ const fetchDoctorsById=async(req,res)=>{
       console.log('No doctor found for ID:', id); // Add this debug log
       return res.status(404).send('Doctor not found');
     }
-
-    const doctorData = doctor.toJSON();
     // For now, let's just send the JSON data instead of rendering
-    res.json(doctorData);
+    res.json(doctor);
   } catch (error) {
     console.error('Error fetching doctor:', error);
     res.status(500).send('Server error');
@@ -168,4 +166,15 @@ const fetchUserId = async (req, res) => {
   }
 };
 
-module.exports={fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
+const fetchClinicById=async(req,res)=>{
+  const {id}=req.params;
+  console.log(id)
+  try {
+    const clinic=await Clinic.findOne({where:{id:id}});
+    res.json({clinic:clinic});
+  } catch (error) {
+    res.status(401).json({error:"Invalid id"})
+  }
+}
+
+module.exports={fetchClinicById,fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}

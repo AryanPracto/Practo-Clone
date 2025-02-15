@@ -3,10 +3,17 @@ import { useSearchParams } from 'react-router-dom';
 import axios from "axios";
 
 const PaymentSummary = () => {
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get('token');
+    const searchParams = new URLSearchParams(window.location.search);
+    const clinicId = searchParams.get("clinicId");
+    const doctorId = searchParams.get("doctorId");
+    const date = searchParams.get("date");
+    const time = searchParams.get("time");
+    const fee = searchParams.get("fee");
+    const token = searchParams.get("token");
   const [msg, setMsg] = useState("Login / Signup");
   const [isActive, setIsActive] = useState(false);
+  const [clinic,setClinic]=useState(null);
+  const [doctor,setDoctor]=useState(null);
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -24,9 +31,28 @@ const PaymentSummary = () => {
         setMsg("Error fetching user"); // Show an error message in UI
       }
     };
-
     fetchUserId();
-  }, [token]); // Re-run effect when `token` changes
+
+    const fetchClinic=async()=>{
+        try {
+            const response=await axios.get(`http://localhost:5000/api/v1/get/clinic/${clinicId}`)
+            setClinic(response.data.clinic);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    fetchClinic();
+
+    const fetchDoctor=async()=>{
+        try {
+            const response=await axios.get(`http://localhost:5000/api/v1/get/doctor/id/${doctorId}`)
+            setDoctor(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    fetchDoctor()
+  }, []); // Re-run effect when `token` changes
 
   const logoHandler = () => {
     window.location.href = "http://localhost:5000";
@@ -69,9 +95,11 @@ const PaymentSummary = () => {
       
       <div>
         <h2>Payment Summary</h2>
-        <p>Clinic: {searchParams.get('clinic')}</p>
-        <p>Time: {searchParams.get('time')}</p>
-        <p>Fee: {searchParams.get('fee')}</p>
+        <p>Clinic: {clinic?.name}</p>
+        <p>Time: {time}</p>
+        <p>Fee: {fee}</p>
+        <p>Date : {date}</p>
+        <p>Doctor : {doctor?.name}</p>
       </div>
     </>
   );
