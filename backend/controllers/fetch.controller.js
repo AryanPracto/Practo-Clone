@@ -2,6 +2,9 @@ const Doctor = require("../models/doctor.model.js");
 const { Op } = require("sequelize");
 const Clinic=require('../models/clinic.model.js')
 const Slot=require('..//models/slot.model.js')
+const jwt=require('jsonwebtoken')
+import axios from "axios"
+import User from "../models/user.model.js";
 
 const fetchDoctors=async(req,res)=>{
     try {
@@ -149,4 +152,20 @@ const fetchSlots=async(req,res)=>{
   }
 }
 
-module.exports={fetchSlots,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
+const fetchUserId = async (req, res) => {
+  const { token } = req.body;
+  if (!token) return res.status(400).json({ error: 'Token is required' });
+  console.log(token);
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId; // Extract userId from decoded token
+    const user = await User.findOne({ where: { id: userId } });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    res.json({ userId: user.id, user }); // Send both userId and user data
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+};
+
+module.exports={fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
