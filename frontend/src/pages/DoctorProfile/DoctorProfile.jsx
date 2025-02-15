@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./DoctorProfile.css";
+import ClinicSelector from "../ClinicSelector/ClinicSelector.jsx"
 
 const DoctorProfile = () => {
   const { id } = useParams();
@@ -21,6 +22,11 @@ const DoctorProfile = () => {
   // UI text
   const [currentSearch, setCurrentSearch] = useState("Dentist");
   const [msg, setMsg] = useState("Login / Signup");
+
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+const [selectedClinic, setSelectedClinic] = useState(null);
+
+const [slots,setSlots]=useState(null);
 
   // Popular Searches
   const searchOptions = [
@@ -68,6 +74,26 @@ const DoctorProfile = () => {
         });
     }
   }, [id]);
+
+  useEffect(() => {
+    setSelectedClinic(clinics[0]);
+    if (id && selectedClinic && selectedDate) {
+      axios
+        .get(`http://localhost:5000/api/v1/get/slots`, {
+          params: {
+            doctorId: id,
+            clinicId: selectedClinic,
+            date: selectedDate
+          }
+        })
+        .then((res) => {
+          setSlots(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [id, selectedClinic, selectedDate]);
 
   // Handle popular searches
   const handleOptionClick = (option) => {
@@ -265,37 +291,10 @@ const DoctorProfile = () => {
           </div>
 
           {/* Right Column (Appointment Section) */}
-          <div className="profile-right">
-            <div className="appointment-card">
-              <h2>Book Appointment</h2>
-              <div className="clinic-type">
-                <span className="clinic-icon">🏥</span>
-                <span>Clinic Appointment</span>
-                {/* If multiple clinics exist, you might dynamically show the fee or show them all */}
-                <span className="fee">₹300</span>
-              </div>
-              <div className="time-slots">
-                <div className="date-navigator">
-                  <button className="date-nav-btn">←</button>
-                  <div className="available-dates">
-                    <div className="date-item selected">Today</div>
-                    <div className="date-item">Tomorrow</div>
-                    <div className="date-item">Sun, 18 Feb</div>
-                  </div>
-                  <button className="date-nav-btn">→</button>
-                </div>
-                <div className="slots-container">
-                  <h3>Available Slots</h3>
-                  <div className="slot-group">
-                    <button className="time-slot">09:30 AM</button>
-                    <button className="time-slot">10:00 AM</button>
-                    <button className="time-slot">10:30 AM</button>
-                    <button className="time-slot">11:00 AM</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ClinicSelector 
+  selectedClinic={selectedClinic}
+  slots={slots}
+/>
         </div>
       </div> 
     </div>

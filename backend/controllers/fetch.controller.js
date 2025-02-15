@@ -149,4 +149,4 @@ const fetchSlots=async(req,res)=>{
   }
 }
 
-module.exports={fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
+module.exports={fetchSlots,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
