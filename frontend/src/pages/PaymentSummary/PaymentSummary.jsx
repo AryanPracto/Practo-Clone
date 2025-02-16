@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from "axios";
+import './PaymentSummary.css'
+import AppointmentBox from '../AppointmentBox/AppointmentBox.jsx';
+
 
 const PaymentSummary = () => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -14,6 +17,12 @@ const PaymentSummary = () => {
   const [isActive, setIsActive] = useState(false);
   const [clinic,setClinic]=useState(null);
   const [doctor,setDoctor]=useState(null);
+  const [patient, setPatient] = useState({ name: "Aryan Upadhyay", mobile: "+919302359954", email: "aryan.upadhyay@practo.com" });
+  const [paymentOption, setPaymentOption] = useState("payLater");
+
+  const handlePaymentSelection = (option) => {
+    setPaymentOption(option);
+};
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -52,7 +61,9 @@ const PaymentSummary = () => {
         }
     }
     fetchDoctor()
-  }, []); // Re-run effect when `token` changes
+
+
+  }, []);
 
   const logoHandler = () => {
     window.location.href = "http://localhost:5000";
@@ -92,14 +103,10 @@ const PaymentSummary = () => {
           </button>
         </div>
       </nav>
-      
-      <div>
-        <h2>Payment Summary</h2>
-        <p>Clinic: {clinic?.name}</p>
-        <p>Time: {time}</p>
-        <p>Fee: {fee}</p>
-        <p>Date : {date}</p>
-        <p>Doctor : {doctor?.name}</p>
+    
+
+      <div className="payment-summary-container">
+        <AppointmentBox doctor={doctor} clinic={clinic} date={date} time={time}/>      
       </div>
     </>
   );

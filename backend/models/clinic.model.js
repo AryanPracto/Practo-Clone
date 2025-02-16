@@ -36,6 +36,10 @@ const Clinic = sequelize.define(
     rating:{
       type:DataTypes.DOUBLE,
       allowNull:false,
+    },
+    image:{
+      type:DataTypes.STRING,
+      allowNull:true
     }
   },
   {
