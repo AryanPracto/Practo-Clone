@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from "axios";
 import './PaymentSummary.css'
 import AppointmentBox from '../AppointmentBox/AppointmentBox.jsx';
+import AppointmentForm from '../AppointmentForm/AppointmentForm.jsx';
 
 
 const PaymentSummary = () => {
@@ -19,6 +20,7 @@ const PaymentSummary = () => {
   const [doctor,setDoctor]=useState(null);
   const [patient, setPatient] = useState({ name: "Aryan Upadhyay", mobile: "+919302359954", email: "aryan.upadhyay@practo.com" });
   const [paymentOption, setPaymentOption] = useState("payLater");
+  const [user,setUser]=useState(null)
 
   const handlePaymentSelection = (option) => {
     setPaymentOption(option);
@@ -33,8 +35,9 @@ const PaymentSummary = () => {
 
       try {
         const response = await axios.post('http://localhost:5000/api/v1/get/userId', { token });
-        const user = response.data.user;
-        setMsg(user?.name || "User not found"); // Set user's name or fallback text
+        const us = response.data.user;
+        setUser(us);
+        setMsg(us?.name || "User not found"); // Set user's name or fallback text
       } catch (error) {
         console.error("Error verifying token:", error.response?.data || error.message);
         setMsg("Error fetching user"); // Show an error message in UI
@@ -61,8 +64,6 @@ const PaymentSummary = () => {
         }
     }
     fetchDoctor()
-
-
   }, []);
 
   const logoHandler = () => {
@@ -106,7 +107,8 @@ const PaymentSummary = () => {
     
 
       <div className="payment-summary-container">
-        <AppointmentBox doctor={doctor} clinic={clinic} date={date} time={time}/>      
+        <AppointmentBox doctor={doctor} clinic={clinic} date={date} time={time}/>  
+        <AppointmentForm user={user}/>    
       </div>
     </>
   );

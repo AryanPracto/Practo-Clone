@@ -2930,7 +2930,7 @@ font-size: 18px;
   }
   
 .payment-summary-container {
-    width: 40vw; /* Adjust width as needed */
+    /* width: 40vw; Adjust width as needed */
     min-height: calc(100vh - 60px); /* Leave space for the navbar */
     background-color: #f9f9f9;
     padding: 20px;
@@ -3029,6 +3029,9 @@ font-size: 18px;
     margin-top: 10px;
   }
   
+body{
+    background-color: #f9f9f9;
+}
 .home {
     max-width: 1200px;
     margin: 0 auto;
