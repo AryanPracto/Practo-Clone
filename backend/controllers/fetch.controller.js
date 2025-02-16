@@ -2,6 +2,7 @@ const Doctor = require("../models/doctor.model.js");
 const { Op } = require("sequelize");
 const Clinic=require('../models/clinic.model.js')
 const Slot=require('..//models/slot.model.js')
+const Story=require('../models/story.model.js')
 const jwt=require('jsonwebtoken')
 import axios from "axios"
 import User from "../models/user.model.js";
@@ -221,4 +222,23 @@ const fetchSlotById=async(req,res)=>{
   }
 }
 
-module.exports={fetchSlotById,fetchUserById,fetchAppointment,fetchClinicById,fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
+const fetchStoriesByDoctor = async (req, res) => {
+  const { doctorId } = req.params;
+
+  try {
+      const stories = await Story.findAll({
+          where: { doctorId: doctorId }
+      });
+
+      if (stories.length === 0) {
+          return res.status(404).json({ message: "No stories found for this doctor." });
+      }
+
+      res.json({ stories:stories });
+  } catch (error) {
+      console.error("Error fetching stories:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports={fetchStoriesByDoctor,fetchSlotById,fetchUserById,fetchAppointment,fetchClinicById,fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}

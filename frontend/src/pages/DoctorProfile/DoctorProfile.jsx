@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./DoctorProfile.css";
 import ClinicSelector from "../ClinicSelector/ClinicSelector.jsx"
+import dayjs from "dayjs"; // Install it if not already: npm install dayjs
+
 
 const DoctorProfile = () => {
   const { id } = useParams();
@@ -10,6 +12,8 @@ const DoctorProfile = () => {
   // State for toggles/search
   const [isActive, setIsActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [selectedSection, setSelectedSection] = useState("info");
+  const [stories, setStories] = useState([]);
 
   // Doctor & Clinics Data
   const [doctor, setDoctor] = useState(null);
@@ -22,8 +26,9 @@ const DoctorProfile = () => {
   // UI text
   const [currentSearch, setCurrentSearch] = useState("Dentist");
   const [msg, setMsg] = useState("Login / Signup");
+  const today = dayjs().format("YYYY-MM-DD"); // Format date properly
+const [selectedDate, setSelectedDate] = useState(today);
 
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
 const [selectedClinic, setSelectedClinic] = useState(null);
 
 const [slots,setSlots]=useState([]);
@@ -73,6 +78,11 @@ const [slots,setSlots]=useState([]);
         .catch((err) => {
           console.error(err);
         });
+
+        axios.get(`http://localhost:5000/api/v1/get/story/${id}`)
+        .then((res) => {
+          setStories(res.data.stories);
+        });
     }
 
     if(localStorage.getItem('naam')){
@@ -82,22 +92,27 @@ const [slots,setSlots]=useState([]);
 
   useEffect(() => {
     if (id && selectedClinic && selectedDate) {
+      console.log(id,selectedClinic,selectedDate);
       axios
-        .get(`http://localhost:5000/api/v1/get/slots`, {
-          params: {
-            doctorId: id,
-            clinicId: selectedClinic,
-            date: selectedDate
-          }
-        })
-        .then((res) => {
-          setSlots(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+  .get(`http://localhost:5000/api/v1/get/slots`, {
+    params: {
+      doctorId: id,
+      clinicId: selectedClinic,
+      date: selectedDate
     }
-  }, [id, selectedClinic]);
+  })
+  .then((response) => {
+    console.log("API Response:", response.data); // Log the response
+    setSlots(response.data); // Assuming response.data contains slots
+  })
+  .catch((error) => {
+    console.error("Error fetching slots:", error);
+  });
+    }
+    else{
+      console.log(selectedDate)
+    }
+  }, [id, selectedClinic, selectedDate]);
 
   // Handle popular searches
   const handleOptionClick = (option) => {
@@ -241,64 +256,75 @@ const [slots,setSlots]=useState([]);
                 <h1>{name}</h1>
                 <div className="qualifications">{specialization}</div>
                 <div className="specialities">
-                  {post &&
-                    post.split(",").map((specialty, index) => (
-                      <span key={index} className="specialty-tag">
-                        {specialty.trim()}
-                      </span>
-                    ))}
+                  {post?.split(",").map((specialty, index) => (
+                    <span key={index} className="specialty-tag">
+                      {specialty.trim()}
+                    </span>
+                  ))}
                 </div>
-                <div className="experience">
-                  {experience} Years Experience Overall
-                </div>
-                <div className="registration">
-                  <span className="verified-badge">
-                    ✓ Medical Registration Verified
-                  </span>
-                </div>
+                <div className="experience">{experience} Years Experience Overall</div>
               </div>
             </div>
 
-            {/* Doctor Description */}
+            {/* Doctor Description Section */}
             <div className="doctor-description">
+              <h2>About Doctor</h2>
               <p>{description}</p>
             </div>
 
-            {/* Clinic Information */}
-            <div className="clinic-info">
-              <h2>Clinic Details</h2>
-              {/* Map over all clinics fetched for this doctor */}
-              {clinics.map((clinic) => (
-                <div key={clinic.id} className="clinic-card">
-                  <h3>
-                    {clinic.name}{" "}
-                    <span className="clinic-rating">★ {clinic.rating}</span>
-                  </h3>
-                  <div className="clinic-timings">
-                    <div className="timing-label">Timings:</div>
-                    <div className="timing-value">
-                      {clinic.workingDays} <br />
-                      {formatTime(clinic.openingTime)} -{" "}
-                      {formatTime(clinic.closingTime)}
-                    </div>
-                  </div>
-                  <div className="clinic-fee">
-                    <span className="fee-label">Consultation Fee:</span>
-                    <span className="fee-value">₹{clinic.fee}</span>
-                  </div>
-                  <div className="clinic-address">
-                    <p>{clinic.location}</p>
-                  </div>
-                </div>
-              ))}
+            {/* Dropdown for Info & Stories */}
+            <div className="section-dropdown">
+              <button 
+                className={selectedSection === "info" ? "active" : ""} 
+                onClick={() => setSelectedSection("info")}
+              >
+                Info
+              </button>
+              <button 
+                className={selectedSection === "stories" ? "active" : ""} 
+                onClick={() => setSelectedSection("stories")}
+              >
+                Stories
+              </button>
             </div>
+
+            {/* Clinic Info Section */}
+            {selectedSection === "info" && (
+              <div className="clinic-info">
+                <h2>Clinic Details</h2>
+                {clinics.map((clinic) => (
+                  <div key={clinic.id} className="clinic-card">
+                    <h3>{clinic.name}</h3>
+              <p><strong>Location:</strong> {clinic.location}</p>
+              <p><strong>Working Days:</strong> {clinic.workingDays}</p>
+              <p><strong>Timings:</strong> {clinic.openingTime}-{clinic.closingTime}</p>
+              <p><strong>Consultation Fee:</strong> ₹{clinic.fee}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Patient Stories Section */}
+            {selectedSection === "stories" && (
+              <div className="patient-stories">
+                <h2>Patient Stories</h2>
+                {stories.length > 0 ? (
+                  stories.map((story) => (
+                    <div key={story.id} className="story-card">
+                      <h3>{story.userName}</h3>
+                      <p className="story-title">{story.title}</p>
+                      <p className="story-content">{story.content}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No stories available.</p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Right Column (Appointment Section) */}
-          <ClinicSelector 
-  clinic={clinics[0]}  // Ensure prop name matches
-  slots={slots}
-/>
+          <ClinicSelector id={id} clinic={clinics[0]} slots={slots} />
         </div>
       </div> 
     </div>

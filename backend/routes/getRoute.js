@@ -1,5 +1,5 @@
 const express=require("express");
-const {fetchSlotById,fetchUserById,fetchAppointment,fetchClinicById,fetchSlots,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById, fetchClinicsByDoctorId, fetchUserId}=require("../controllers/fetch.controller.js")
+const {fetchStoriesByDoctor,fetchSlotById,fetchUserById,fetchAppointment,fetchClinicById,fetchSlots,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById, fetchClinicsByDoctorId, fetchUserId}=require("../controllers/fetch.controller.js")
 
 const router=express.Router();
 
@@ -14,5 +14,6 @@ router.get("/clinic/:id",fetchClinicById);
 router.get("/appointment/:appointmentId",fetchAppointment)
 router.get("/user/:id",fetchUserById)
 router.get('/slot/:id',fetchSlotById)
+router.get('/story/:doctorId',fetchStoriesByDoctor)
 
 module.exports=router;

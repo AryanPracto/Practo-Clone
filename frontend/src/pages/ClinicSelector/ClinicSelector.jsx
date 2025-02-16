@@ -1,10 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, HomeIcon } from 'lucide-react';
 import './ClinicSelector.css';
+import dayjs from "dayjs"
+import axios from "axios"
 
-const ClinicSelector = ({ clinic, slots }) => {
-  const [selectedDate, setSelectedDate] = useState('Today');
-  const dates = ['Today', 'Tomorrow', 'Mon, 17 Feb'];
+const ClinicSelector = ({ id, clinic, slots }) => {
+  const [selectedDate, setSelectedDate] = useState('2025-02-17');
+  const [slo,setSlo]=useState(slots);
+  const dates = [
+    { label: 'Today', value: dayjs().format("YYYY-MM-DD") },
+    { label: 'Tomorrow', value: dayjs().add(1, 'day').format("YYYY-MM-DD") },
+    { label: 'Wed, 19 Feb', value: dayjs().add(2, 'day').format("YYYY-MM-DD") }
+  ];
+
+  useEffect(() => {
+    if (id && selectedDate && clinic?.id) {
+      console.log("Fetching slots for:", selectedDate);
+      
+      setSlo([]); // Clear previous slots before fetching new ones
+  
+      axios
+        .get(`http://localhost:5000/api/v1/get/slots`, {
+          params: {
+            doctorId: id,
+            clinicId: clinic?.id,
+            date: selectedDate, // Fetch slots for the selected date
+          }
+        })
+        .then((response) => {
+          console.log("API Response for slots:", response.data);
+          setSlo(response.data || []); // Ensure slots update properly
+        })
+        .catch((error) => {
+          console.error("Error fetching slots:", error);
+          setSlo([]); // Prevent stale data on error
+        });
+    }
+  }, [id, selectedDate, clinic?.id]); 
 
   // Function to handle time slot click
   const handleSlotClick = (slot) => {
@@ -62,19 +94,18 @@ const ClinicSelector = ({ clinic, slots }) => {
         </button>
 
         <div className="date-options">
-          {dates.map((date) => (
-            <div
-              key={date}
-              className={`date-option ${selectedDate === date ? 'selected-date' : ''}`}
-              onClick={() => setSelectedDate(date)}
-            >
-              <div className="date-label">{date}</div>
-              <div className="date-slots">
-                {date === 'Today'}
-              </div>
-            </div>
-          ))}
-        </div>
+  {dates.map((dateObj) => (
+    <div
+      key={dateObj.value}
+      className={`date-option ${selectedDate === dateObj.value ? 'selected-date' : ''}`}
+      onClick={() => {
+        setSelectedDate(dateObj.value); // Store actual date in YYYY-MM-DD format
+      }}
+    >
+      <div className="date-label">{dateObj.label}</div> 
+    </div>
+  ))}
+</div>
 
         <button className="date-arrow">
           <ChevronRight className="icon" />
@@ -84,10 +115,10 @@ const ClinicSelector = ({ clinic, slots }) => {
       {/* Time Slots */}
       <div className="time-slot-container">
         <h4>
-          <span>{slots?.length} Slots</span>
+          <span>{slo?.length} Slots</span>
         </h4>
         <div className="time-slots">
-          {slots.map((slot) => (
+          {slo.map((slot) => (
             <button key={slot.id} className="time-slot-button" onClick={() => handleSlotClick(slot)}>
               {slot?.time || "na"}
             </button>
