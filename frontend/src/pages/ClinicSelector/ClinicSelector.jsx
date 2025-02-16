@@ -20,6 +20,7 @@ const ClinicSelector = ({ clinic, slots }) => {
     console.log(selectedDate);
   
     const queryParams = new URLSearchParams({
+      slotId:slot?.id || '',
       clinic: clinic?.name || "n/a",
       clinicId: clinic?.id || "n/a", // Clinic ID
       doctorId: slot?.doctorId || "n/a", // Doctor ID

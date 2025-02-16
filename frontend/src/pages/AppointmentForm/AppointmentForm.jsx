@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./AppointmentForm.css";
+import axios from "axios";
 
-const AppointmentForm = ({ user }) => {
+const AppointmentForm = ({ user,clinic,doctor,slotId}) => {
   const [patientType, setPatientType] = useState("self");
   const [fullName, setFullName] = useState(user?.name || "");  
   const [mobile, setMobile] = useState("+911234567890");  
@@ -17,6 +18,20 @@ const AppointmentForm = ({ user }) => {
       setEmail("");
     }
   }, [patientType, user]);
+
+  const onClickHandler=async()=>{
+    console.log(user?.id,Number(slotId),doctor?.id,clinic?.id,clinic?.fee)
+    const data={
+        userId:user?.id,
+        slotId:Number(slotId),
+        doctorId:doctor?.id,
+        clinicId:clinic?.id,
+        fee:clinic?.fee
+    }
+
+    const response=await axios.post('http://localhost:5000/api/v1/checkout/booking',{data});
+    window.location.href=response.data.url;
+  }
 
   return (
     <div className="appointment-form">
@@ -79,7 +94,7 @@ const AppointmentForm = ({ user }) => {
         <span> Get updates on WhatsApp number {mobile}</span>
       </div>
 
-      <button className="confirm-btn">Confirm Clinic Visit</button>
+      <button onClick={onClickHandler} className="confirm-btn">Confirm Clinic Visit</button>
 
       <p className="updates-info">1. Updates will be sent to {mobile}</p>
       <p className="terms">

@@ -8,6 +8,7 @@ import AppointmentForm from '../AppointmentForm/AppointmentForm.jsx';
 
 const PaymentSummary = () => {
     const searchParams = new URLSearchParams(window.location.search);
+    const slotId=searchParams.get("slotId")
     const clinicId = searchParams.get("clinicId");
     const doctorId = searchParams.get("doctorId");
     const date = searchParams.get("date");
@@ -64,6 +65,7 @@ const PaymentSummary = () => {
         }
     }
     fetchDoctor()
+
   }, []);
 
   const logoHandler = () => {
@@ -108,7 +110,7 @@ const PaymentSummary = () => {
 
       <div className="payment-summary-container">
         <AppointmentBox doctor={doctor} clinic={clinic} date={date} time={time}/>  
-        <AppointmentForm user={user}/>    
+        <AppointmentForm user={user} clinic={clinic} doctor={doctor} slotId={slotId}/>    
       </div>
     </>
   );

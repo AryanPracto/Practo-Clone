@@ -8,6 +8,8 @@ import Login from "./pages/Login/Login.jsx";
 import Signup from "./pages/Signup/Signup.jsx";
 import DoctorProfile from "./pages/DoctorProfile/DoctorProfile.jsx";
 import PaymentSummary from "./pages/PaymentSummary/PaymentSummary.jsx";
+import Success from "./pages/Success/Success.jsx";
+import Cancel from "./pages/Cancel/Cancel.jsx";
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/signup" element={<Signup/>}></Route>
         <Route path="/doctor/:id" element={<DoctorProfile/>}></Route>
         <Route path="/payment-summary" element={<PaymentSummary />} />
+        <Route path="/success" element={<Success/>}></Route>
+        <Route path="/cancel" element={<Cancel/>}></Route>
     </Routes>
   </Router>
   )

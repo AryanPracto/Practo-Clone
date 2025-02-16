@@ -49,14 +49,6 @@ const Appointment = sequelize.define(
       },
       onDelete: "CASCADE",
     },
-    date: {
-      type: DataTypes.DATEONLY, // Stores only date (YYYY-MM-DD)
-      allowNull: false,
-    },
-    time: {
-      type: DataTypes.TIME, // Stores time (HH:MM:SS)
-      allowNull: false,
-    },
     fee: {
       type: DataTypes.FLOAT, // Doctor’s consultation fee
       allowNull: false,

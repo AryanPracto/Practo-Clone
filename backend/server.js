@@ -14,6 +14,7 @@ const Doctor=require('./models/doctor.model.js')
 const getRoute=require('./routes/getRoute.js');
 const insertRoute=require('./routes/insertRoute.js');
 const authRoute=require('./routes/authRoute.js');
+const checkoutRoute=require('./routes/checkoutRoute.js')
 // Import your components
 const Home = require('../frontend/src/pages/Home/Home.jsx').default;
 const ListDentist = require('../frontend/src/pages/ListDentist/ListDentist.jsx').default;
@@ -33,6 +34,7 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 app.use('/api/v1/get',getRoute)
 app.use('/api/v1/insert',insertRoute)
 app.use('/api/v1/auth',authRoute)
+app.use('/api/v1/checkout',checkoutRoute)
 
 sequelize
   .authenticate()
