@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from "axios"
+import './Success.css'
 
 const Success = () => {
     const [msg, setMsg] = useState("Login / Signup");
@@ -62,7 +63,7 @@ const Success = () => {
         async function fetchSlot() {
             try {
                 const response = await axios.get(`http://localhost:5000/api/v1/get/slot/${appointment.slotId}`);
-                setSlot(response.data);
+                setSlot(response.data.slot);
             } catch (err) {
                 console.log("Error fetching slot:", err);
             }
@@ -120,13 +121,34 @@ const Success = () => {
         </div>
       </nav>
 
-    <h2>Appointment Confirmed 🎉</h2>
-        <p>appointment id : {appointment?.id}</p>
-        <p>Doctor name is : {doctor?.name}</p>
-        <p>Clinic name is : {clinic?.name}</p>
-        <p>User name is : {user?.name}</p>
+      <div className="success-container">
+            <div className="success-card">
+                <h2 className="success-title">🎉 Appointment Confirmed!</h2>
 
-    <button onClick={() => console.log("Cancel Appointment Logic")}>Cancel Appointment</button>
+                <div className="appointment-details">
+                    <div className="doctor-info">
+                        <img src={doctor?.image} alt="Doctor" className="doctor-image" />
+                        <p className="doctor-name">{doctor?.name}</p>
+                        <p className="doctor-specialization">{doctor?.specialization}</p>
+                    </div>
+
+                    <div className="clinic-info">
+                        <img src={clinic?.image} alt="Clinic" className="clinic-image" />
+                        <p className="clinic-name">{clinic?.name}</p>
+                        <p className="clinic-location">{clinic?.location}</p>
+                    </div>
+                </div>
+
+                <div className="slot-details">
+                    <p><strong>Patient:</strong> {user?.name}</p>
+                    <p><strong>Date:</strong> {slot?.date}</p>
+                    <p><strong>Time:</strong> {slot?.time}</p>
+                    <p><strong>Fees:</strong> ₹{clinic?.fee}</p>
+                </div>
+
+                <button className="cancel-btn">Cancel Appointment</button>
+            </div>
+        </div>
     </>
   )
 }
