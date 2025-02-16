@@ -1,7 +1,8 @@
-const Doctor = require("../models/doctor.model");
+const Doctor = require("../models/doctor.model.js");
 const Clinic=require('../models/clinic.model.js');
 const DoctorClinic=require('../models/doctor_clinic.model.js')
 const Slot=require('../models/slot.model.js')
+const Story=require('../models/story.model.js')
 
 // Function to insert a doctor
 const insertDoctors = async (req, res) => {
@@ -142,4 +143,27 @@ const insertSlot = async (req, res) => {
   }
 };
 
-module.exports = { insertDoctors,insertClinic,insertDocClinic,insertSlot };
+const insertStory=async(req,res)=>{
+  try {
+    const { userName, title, content, doctorId } = req.body;
+
+    // Validate required fields
+    if (!userName || !title || !content || !doctorId) {
+        return res.status(400).json({ error: "All fields are required" });
+    }
+
+    const newStory = await Story.create({
+        userName,
+        title,
+        content,
+        doctorId,
+    });
+
+    res.status(201).json({ message: "Story added successfully", story: newStory });
+} catch (error) {
+    console.error("Error adding story:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+}
+}
+
+module.exports = { insertDoctors,insertClinic,insertDocClinic,insertSlot,insertStory };

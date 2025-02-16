@@ -147,20 +147,20 @@ const Home = () => {
       </div>
 
       <div className="services-grid">
-        <div className="service-card">
-          <img src="https://clone-practo.vercel.app/images/instant_video_consulation.webp" alt="Video consultation" />
+        <div className="service-card1">
+          <img className='img1' src="https://clone-practo.vercel.app/images/instant_video_consulation.webp" alt="Video consultation" />
           <h3>Instant Video Consultation</h3>
           <p>Connect within 60 secs</p>
         </div>
         <a className='dusra' href='http://localhost:5173/search'>
-          <div className="service-card">
-            <img src="https://clone-practo.vercel.app/images/find_doctors.webp" alt="Find doctors" />
+          <div className="service-card2">
+            <img className='img2' src="https://clone-practo.vercel.app/images/find_doctors.webp" alt="Find doctors" />
             <h3>Find Doctors Near You</h3>
             <p>Confirmed appointments</p>
           </div>
         </a>
-        <div className="service-card">
-          <img src="https://clone-practo.vercel.app/images/home_surgeries.webp" alt="Surgeries" />
+        <div className="service-card3">
+          <img className='img3' src="https://clone-practo.vercel.app/images/home_surgeries.webp" alt="Surgeries" />
           <h3>Surgeries</h3>
           <p>Safe and trusted surgery centers</p>
         </div>
