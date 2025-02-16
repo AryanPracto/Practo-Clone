@@ -5,6 +5,7 @@ const Slot=require('..//models/slot.model.js')
 const jwt=require('jsonwebtoken')
 import axios from "axios"
 import User from "../models/user.model.js";
+import Appointment from "../models/appointment.model.js";
 
 const fetchDoctors=async(req,res)=>{
     try {
@@ -177,4 +178,47 @@ const fetchClinicById=async(req,res)=>{
   }
 }
 
-module.exports={fetchClinicById,fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}
+const fetchAppointment = async (req, res) => {
+  console.log("Request Params:", req.params); // Debugging
+
+  const { appointmentId } = req.params;
+
+  if (!appointmentId) {
+    return res.status(400).json({ message: "Appointment ID is required" });
+  }
+
+  try {
+    const appointment = await Appointment.findOne({ where: { id:appointmentId } });
+
+    if (!appointment) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    res.json({ appointment });
+  } catch (error) {
+    console.error("Database Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const fetchUserById=async(req,res)=>{
+  const {id}=req.params
+  try {
+    const user=await User.findOne({where:{id:id}});
+    res.json({user:user})
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const fetchSlotById=async(req,res)=>{
+  const {id}=req.params;
+  try {
+    const slot=await Slot.findOne({where:{id:id}});
+    res.json({slot:slot}) 
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports={fetchSlotById,fetchUserById,fetchAppointment,fetchClinicById,fetchSlots,fetchUserId,fetchDoctors,fetchDoctorsByGender,fetchDoctorsByExperience,fetchDoctorsById,fetchClinicsByDoctorId}

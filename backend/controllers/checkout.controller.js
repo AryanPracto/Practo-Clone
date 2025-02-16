@@ -15,6 +15,16 @@ async function handleCheckout(req, res) {
             return res.status(400).json({ message: "Selected slot is not available." });
         }
 
+         // **Create Appointment in Database**
+         const appointment = await Appointment.create({
+            userId: userId,
+            slotId,
+            doctorId,
+            clinicId,
+            fee,
+            status: "Scheduled",
+        });
+
         // **Create Stripe Checkout Session**
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
@@ -29,18 +39,8 @@ async function handleCheckout(req, res) {
                 }
             ],
             mode: "payment",
-            success_url: "http://localhost:5173/success",
+            success_url: `http://localhost:5000/success/${appointment.id}`,
             cancel_url: "http://localhost:5173/cancel"
-        });
-
-        // **Create Appointment in Database**
-        const appointment = await Appointment.create({
-            userId: userId,
-            slotId,
-            doctorId,
-            clinicId,
-            fee,
-            status: "Scheduled",
         });
 
         // **Update Slot Status**

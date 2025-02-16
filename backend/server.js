@@ -14,7 +14,8 @@ const Doctor=require('./models/doctor.model.js')
 const getRoute=require('./routes/getRoute.js');
 const insertRoute=require('./routes/insertRoute.js');
 const authRoute=require('./routes/authRoute.js');
-const checkoutRoute=require('./routes/checkoutRoute.js')
+const checkoutRoute=require('./routes/checkoutRoute.js');
+const { default: Success } = require("../frontend/src/pages/Success/Success.jsx");
 // Import your components
 const Home = require('../frontend/src/pages/Home/Home.jsx').default;
 const ListDentist = require('../frontend/src/pages/ListDentist/ListDentist.jsx').default;
@@ -119,3 +120,11 @@ app.get('/doctor/:id', async (req, res) => {
     console.log(error)
   }
 });
+
+app.get('/success/:appointmentId',async(req,res)=>{
+  try {
+    res.send(renderPage(Success))
+  } catch (error) {
+    console.log(error);
+  }
+})
