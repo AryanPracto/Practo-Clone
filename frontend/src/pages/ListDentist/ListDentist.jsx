@@ -4,8 +4,6 @@ import axios from "axios";
 import { MapPin, Phone } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 
-
-
 const ListDentist = () => {
   const [isActive, setIsActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -14,6 +12,7 @@ const ListDentist = () => {
   const [error, setError] = useState(null);
   const [currentSearch, setCurrentSearch] = useState('Dentist');
   const [msg,setMsg]=useState('Login / Signup');
+  const [search,setSearch]=useState('Search Doctors, Clinics, Hospitals etc.')
 
   const searchOptions = [
     { id: 1, name: 'Cold, Cough & Fever', type: 'CONDITION', isClickable: true },
@@ -54,7 +53,15 @@ const ListDentist = () => {
     }
   }, []);
 
+  useEffect(()=>{
+    if(localStorage.getItem('search')){
+      setSearch(localStorage.getItem('search'));
+    }
+  },[search])
+
   const handleOptionClick = (option) => {
+    localStorage.setItem('search',option.name); // Set selected search option in the input field
+      setIsDropdownVisible(false);
     if (option.isClickable && option.name==='Cold, Cough & Fever') {
       window.location.href = 'http://localhost:5000/list-cough';
     }
@@ -170,7 +177,7 @@ const ListDentist = () => {
         <div className="doctor-search">
           <input
             type="text"
-            placeholder="Search doctors, clinics, hospitals, etc."
+            placeholder={search}
             onFocus={() => setIsDropdownVisible(true)}
             onBlur={() => setTimeout(() => setIsDropdownVisible(false), 200)}
           />

@@ -5,6 +5,7 @@ const Home = () => {
   const [isActive, setIsActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [msg,setMsg]=useState('Login / Signup')
+  const [searchQuery, setSearchQuery] = useState(''); 
 
   const searchOptions = [
     { id: 1, name: 'Cold, Cough & Fever', type: 'CONDITION', isClickable: true },
@@ -59,10 +60,13 @@ const Home = () => {
 
   const handleOptionClick = (option) => {
     if (option.isClickable) {
+      localStorage.setItem('search',option.name); // Set selected search option in the input field
+      setIsDropdownVisible(false); // Hide dropdown after selection
+
       if (option.name === 'Cold, Cough & Fever') {
-        window.location.href='http://localhost:5000/list-cough';
+        window.location.href = 'http://localhost:5000/list-cough';
       } else if (option.name === 'Dentist') {
-        window.location.href='http://localhost:5000/list-dentist';
+        window.location.href = 'http://localhost:5000/list-dentist';
       }
     }
   };
