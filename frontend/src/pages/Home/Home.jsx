@@ -82,20 +82,25 @@ const Home = () => {
   return (
     <div className="home">
       <nav className="navbar">
-        <div className="logo">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/en/6/64/Practo_new_logo.png?20180609150803"
-            alt="Practo Logo"
-            className="practo-logo"
-          />
-        </div>
-        <div className="nav-links">
-          <a href="http://localhost:5173/search" onClick={() => setIsActive(true)} className={isActive ? 'active' : ''}>Find Doctors</a>
-          <a href="#video-consult">Video Consult</a>
-          <a href="#surgeries">Surgeries</a>
-          <button onClick={handleLogout} className="login-btn"><a className='lgn' href="http://localhost:5000/login">{msg}</a></button>
-        </div>
-      </nav>
+      <div className="logo">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/en/6/64/Practo_new_logo.png?20180609150803"
+          alt="Practo Logo"
+          className="practo-logo"
+        />
+      </div>
+      <div className="nav-links">
+        <a href="http://localhost:5173/search" onClick={() => setIsActive(true)} className={isActive ? 'active' : ''}>Find Doctors</a>
+        <a href="#video-consult">Video Consult</a>
+        <a href="#surgeries">Surgeries</a>
+        <a href="#for-corporates">For Corporates</a>
+        <a href="#for-providers">For Providers</a>
+        <a href="#security-help">Security & Help</a>
+        <button onClick={handleLogout} className="login-btn">
+          <a className='lgn' href="http://localhost:5000/login">{msg}</a>
+        </button>
+      </div>
+    </nav>
 
       <div className="search-section">
         <div className="location-search">
