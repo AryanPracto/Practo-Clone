@@ -19,7 +19,7 @@ const PaymentSummary = () => {
   const [isActive, setIsActive] = useState(false);
   const [clinic,setClinic]=useState(null);
   const [doctor,setDoctor]=useState(null);
-  const [patient, setPatient] = useState({ name: "Aryan Upadhyay", mobile: "+919302359954", email: "aryan.upadhyay@practo.com" });
+  // const [patient, setPatient] = useState({ name: "Aryan Upadhyay", mobile: "+919302359954", email: "aryan.upadhyay@practo.com" });
   const [paymentOption, setPaymentOption] = useState("payLater");
   const [user,setUser]=useState(null)
 
@@ -72,13 +72,20 @@ const PaymentSummary = () => {
     window.location.href = "http://localhost:5000";
   };
 
-  const msgHandler = () => {
-    if (msg === "Login / Signup") {
+  const msgHandler=async()=>{
+    if (msg === 'Login / Signup') {
       window.location.href = "http://localhost:5000/login";
     } else {
-      setMsg("Login / Signup");
+      try {
+        await axios.post('http://localhost:5000/api/v1/auth/logout', {}, { withCredentials: true });
+        Cookies.remove('authToken');  // Manually remove cookies from frontend (optional)
+        Cookies.remove('naam');  
+        setMsg('Login / Signup');
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
     }
-  };
+  }
 
   return (
     <>

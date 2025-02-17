@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, HomeIcon } from 'lucide-react';
 import './ClinicSelector.css';
 import dayjs from "dayjs"
 import axios from "axios"
+import Cookies from 'js-cookie';
 
 const ClinicSelector = ({ id, clinic, slots }) => {
   const [selectedDate, setSelectedDate] = useState('2025-02-17');
@@ -45,7 +46,7 @@ const ClinicSelector = ({ id, clinic, slots }) => {
       return;
     }
   
-    const token = localStorage.getItem("authToken"); // Get token from localStorage
+    const token = Cookies.get('authToken'); // Get token from localStorage
     console.log(clinic?.id);
     console.log(slot?.doctorId);
     console.log(clinic?.id);
