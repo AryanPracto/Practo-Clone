@@ -36,6 +36,20 @@ async function signup(req, res) {
         });
 
         const token = generateToken(newUser.id);
+
+        res.cookie('authToken', token, {
+            httpOnly: true, // Prevent access from JavaScript
+            secure: process.env.NODE_ENV === 'production', // Secure flag for HTTPS (if in production)
+            sameSite: 'None', // Allow cross-origin access (necessary for different ports)
+            maxAge: 3600000, // Cookie expiry time (1 hour)
+          });
+        
+          res.cookie('naam', name, {
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+            maxAge: 3600000, // Same expiry time for name
+          });
+
         return res.status(201).json({ success: true, message: "User created successfully", token, name });
     } catch (error) {
         console.log(error);
@@ -67,6 +81,19 @@ async function login(req, res) {
 
         const name = user.name;
 
+        res.cookie('authToken', token, {
+            httpOnly: true, // Prevent access from JavaScript
+            secure: process.env.NODE_ENV === 'production', // Secure flag for HTTPS (if in production)
+            sameSite: 'None', // Allow cross-origin access (necessary for different ports)
+            maxAge: 3600000, // Cookie expiry time (1 hour)
+          });
+        
+          res.cookie('naam', name, {
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+            maxAge: 3600000, // Same expiry time for name
+          });
+
         return res.status(200).json({ success: true, message: "Login successful", token, name });
     } catch (error) {
         console.log(error);
@@ -74,4 +101,27 @@ async function login(req, res) {
     }
 }
 
-module.exports = { signup, login };
+const logout=async(req,res)=>{
+    try {
+         // Clear the cookies by setting them to expire in the past
+  res.clearCookie('authToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // Secure flag if using HTTPS
+    sameSite: 'None', // SameSite for cross-origin access
+  });
+
+  res.clearCookie('naam', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'None',
+  });
+
+  // Send a response to the frontend to confirm logout
+  res.json({ message: 'Logged out successfully' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json("internal server error")
+    }
+}
+
+module.exports = { signup, login, logout };

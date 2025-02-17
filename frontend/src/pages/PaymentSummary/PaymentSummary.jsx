@@ -4,7 +4,7 @@ import axios from "axios";
 import './PaymentSummary.css'
 import AppointmentBox from '../AppointmentBox/AppointmentBox.jsx';
 import AppointmentForm from '../AppointmentForm/AppointmentForm.jsx';
-
+import Cookies from 'js-cookie';
 
 const PaymentSummary = () => {
     const searchParams = new URLSearchParams(window.location.search);

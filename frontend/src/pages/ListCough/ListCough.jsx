@@ -3,6 +3,7 @@ import './ListCough.css'
 import axios from "axios";
 import { MapPin, Phone } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
+import Cookies from 'js-cookie';
 
 
 
@@ -49,11 +50,17 @@ const ListDentist = () => {
     };
    
     fetchDoctors();
-
-    if(localStorage.getItem('naam')){
-      setMsg(localStorage.getItem('naam'));
-    }
   }, []);
+
+  useEffect(()=>{
+      const name = Cookies.get('naam');
+          console.log("Cookie value:", name); // Debugging step
+          if (name) {
+            setMsg(name);
+          } else {
+            setMsg("Login / Signup"); // Fallback if the cookie is empty or missing
+          }
+    },[])
 
   useEffect(()=>{
       if(localStorage.getItem('search')){
@@ -141,13 +148,14 @@ const ListDentist = () => {
       }
     };
 
-    const msgHandler=()=>{
+    const msgHandler=async()=>{
       if(msg==='Login / Signup'){
         window.location.href="http://localhost:5000/login";
       }
       else{
         localStorage.removeItem('naam');
         localStorage.removeItem('authToken');
+        await axios.post('http://localhost:5000/api/v1/auth/logout');
         setMsg('Login / Signup');
       }
     }

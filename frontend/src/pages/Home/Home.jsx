@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Home.css'
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Home = () => {
   const [isActive, setIsActive] = useState(false);
@@ -71,16 +73,25 @@ const Home = () => {
     }
   };
 
-  const handleLogout=()=>{
+  const handleLogout=async()=>{
     localStorage.removeItem('authToken')
     localStorage.removeItem('naam')
+    await axios.post('http://localhost:5000/api/v1/auth/logout');
     window.location.replace('http://localhost:5000')
   }
 
+  const nocall=()=>{
+
+  }
+
   useEffect(()=>{
-    if(localStorage.getItem('naam')){
-      setMsg(localStorage.getItem('naam'));
-    }
+    const name = Cookies.get('naam');
+        console.log("Cookie value:", name); // Debugging step
+        if (name) {
+          setMsg(name);
+        } else {
+          setMsg("Login / Signup"); // Fallback if the cookie is empty or missing
+        }
   },[])
 
   return (
@@ -100,7 +111,7 @@ const Home = () => {
         <a href="#for-corporates">For Corporates</a>
         <a href="#for-providers">For Providers</a>
         <a href="#security-help">Security & Help</a>
-        <button onClick={handleLogout} className="login-btn">
+        <button onClick={msg==='Login / Signup'? nocall :handleLogout} className="login-btn">
           <a className='lgn' href="http://localhost:5000/login">{msg}</a>
         </button>
       </div>

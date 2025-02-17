@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Search.css";
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [msg,setMsg]=useState('')
   const [isActive, setIsActive] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [userName,setUserName]=useState()
 
   const searchOptions = [
     { id: 1, name: 'Cold, Cough & Fever', type: 'CONDITION', isClickable: true },
@@ -26,8 +29,12 @@ const Search = () => {
   ];
 
   useEffect(()=>{
-    if(localStorage.getItem('naam')){
-      setMsg(localStorage.getItem('naam'));
+    const name = Cookies.get('naam');
+    console.log("Cookie value:", name); // Debugging step
+    if (name) {
+      setMsg(name);
+    } else {
+      setMsg("Guest"); // Fallback if the cookie is empty or missing
     }
   },[])
 
@@ -51,6 +58,21 @@ const Search = () => {
     window.location.href="http://localhost:5000"
   }
 
+  const handleLogout=async()=>{
+    if (msg === 'Login / Signup') {
+      window.location.href = "http://localhost:5000/login";
+    } else {
+      try {
+        await axios.post('http://localhost:5000/api/v1/auth/logout', {}, { withCredentials: true });
+        Cookies.remove('authToken');  // Manually remove cookies from frontend (optional)
+        Cookies.remove('naam');  
+        setMsg('Login / Signup');
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
+    }
+  }
+
   return (
     <div className="home">
       <div className="navbar">
@@ -66,7 +88,7 @@ const Search = () => {
           <a className="active" href="http://localhost:5173/search">Find Doctors</a>
           <a href="/video-consult">Video Consult</a>
           <a href="/surgeries">Surgeries</a>
-          <button className={msg===''?'loginBtn':" "}>{msg===''?'Signup / Login':msg}</button>
+          <button onClick={handleLogout} className='loginBtn'>{msg}</button>
         </div>
       </div>
 

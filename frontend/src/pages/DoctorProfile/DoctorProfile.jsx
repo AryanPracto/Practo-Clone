@@ -4,7 +4,7 @@ import axios from "axios";
 import "./DoctorProfile.css";
 import ClinicSelector from "../ClinicSelector/ClinicSelector.jsx"
 import dayjs from "dayjs"; // Install it if not already: npm install dayjs
-
+import Cookies from 'js-cookie';
 
 const DoctorProfile = () => {
   const { id } = useParams();
@@ -84,11 +84,17 @@ const [slots,setSlots]=useState([]);
           setStories(res.data.stories);
         });
     }
-
-    if(localStorage.getItem('naam')){
-      setMsg(localStorage.getItem('naam'));
-    }
   }, [id]);
+
+  useEffect(()=>{
+      const name = Cookies.get('naam');
+          console.log("Cookie value:", name); // Debugging step
+          if (name) {
+            setMsg(name);
+          } else {
+            setMsg("Login / Signup"); // Fallback if the cookie is empty or missing
+          }
+    },[])
 
   useEffect(() => {
     if (id && selectedClinic && selectedDate) {
@@ -129,12 +135,13 @@ const [slots,setSlots]=useState([]);
   };
 
   // Login / Logout logic
-  const msgHandler = () => {
+  const msgHandler = async() => {
     if (msg === "Login / Signup") {
       window.location.href = "http://localhost:5000/login";
     } else {
       localStorage.removeItem("naam");
       localStorage.removeItem("authToken");
+      await axios.post('http://localhost:5000/api/v1/auth/logout');
       setMsg("Login / Signup");
     }
   };
