@@ -15,6 +15,7 @@ const getRoute=require('./routes/getRoute.js');
 const insertRoute=require('./routes/insertRoute.js');
 const authRoute=require('./routes/authRoute.js');
 const checkoutRoute=require('./routes/checkoutRoute.js');
+const cancelRoute=require('./routes/cancelRoute.js')
 const cookieParser = require('cookie-parser');
 const { default: Success } = require("../frontend/src/pages/Success/Success.jsx");
 // Import your components
@@ -41,6 +42,7 @@ app.use('/api/v1/get',getRoute)
 app.use('/api/v1/insert',insertRoute)
 app.use('/api/v1/auth',authRoute)
 app.use('/api/v1/checkout',checkoutRoute)
+app.use('/api/v1/cancel',cancelRoute)
 
 sequelize
   .authenticate()

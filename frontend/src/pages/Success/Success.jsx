@@ -93,6 +93,11 @@ const Success = () => {
         }
       };
 
+      const handleCancel=async()=>{
+        await axios.get(`http://localhost:5000/api/v1/cancel/appointment/${appointmentId}`)
+        window.location.href="http://localhost:5000"
+      }
+
 
   return (
     <>
@@ -146,7 +151,7 @@ const Success = () => {
                     <p><strong>Fees:</strong> ₹{clinic?.fee}</p>
                 </div>
 
-                <button className="cancel-btn">Cancel Appointment</button>
+                <button onClick={handleCancel} className="cancel-btn">Cancel Appointment</button>
             </div>
         </div>
     </>
